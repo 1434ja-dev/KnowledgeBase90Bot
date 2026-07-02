@@ -10,7 +10,7 @@ from database import (
     delete_note, get_note_by_id, update_note,
     get_tags, get_notes_by_tag, get_stats
 )
-from ai import AIHelper
+# AI import removed - not needed for basic version
 
 # Setup logging
 logging.basicConfig(
@@ -18,9 +18,6 @@ logging.basicConfig(
     level=logging.INFO
 )
 logger = logging.getLogger(__name__)
-
-# Initialize AI helper
-ai_helper = AIHelper()
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
