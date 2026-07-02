@@ -91,7 +91,6 @@ def search_notes(user_id: int, query: str) -> List[Dict]:
         conn = sqlite3.connect(DB_FILE)
         c = conn.cursor()
         
-        # Search in title and content
         c.execute('''
             SELECT id, title, content, tags, created_at, updated_at
             FROM notes
@@ -242,21 +241,17 @@ def get_stats(user_id: int) -> Dict:
         
         total_notes = len(notes)
         
-        # Tag stats
         tag_counts = {}
         for note in notes:
             for tag in note.get('tags', []):
                 tag_counts[tag] = tag_counts.get(tag, 0) + 1
         
-        # Today's notes
         today = datetime.now().date().isoformat()
         today_notes = sum(1 for note in notes if note['created_at'][:10] == today)
         
-        # Average length
         total_length = sum(len(note['content']) for note in notes)
         avg_length = round(total_length / total_notes) if total_notes > 0 else 0
         
-        # Most used tag
         most_used_tag = max(tag_counts.items(), key=lambda x: x[1]) if tag_counts else ('None', 0)
         
         return {
